@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f0e1; /* soft beige */
+    background: #f5f0e1;
     background-image: url(https://static.vecteezy.com/system/resources/previews/021/428/962/non_2x/background-junk-food-related-seamless-pattern-and-background-editable-stroke-fast-food-line-art-of-hamburger-pizza-hot-dog-beverage-cheeseburger-restaurant-menu-background-free-vector.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -13,9 +13,11 @@ body {
 
 /* Chat container */
 .chat-container {
-    width: 400px;
-    height: 520px;
-    background: #fffaf3; /* light beige */
+    width: 90%;
+    max-width: 400px;
+    height: 80vh;
+    max-height: 600px;
+    background: #fffaf3;
     border-radius: 16px;
     box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
     display: flex;
@@ -25,7 +27,7 @@ body {
 
 /* Title bar */
 .header {
-    background: #6b4226; /* dark brown */
+    background: #6b4226;
     color: #f5f0e1;
     padding: 14px;
     text-align: center;
@@ -36,14 +38,8 @@ body {
     justify-content: center;
     align-items: center;
     gap: 8px;
-    margin-top: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 5px;
     border-radius: 12px 12px;
-}
-
-.header span {
-    font-size: 22px; /* 🍽️ icon size */
 }
 
 /* Chat area */
@@ -51,7 +47,7 @@ body {
     flex: 1;
     padding: 12px;
     overflow-y: auto;
-    background: #f5f0e1; /* beige */
+    background: #f5f0e1;
     display: flex;
     flex-direction: column;
 }
@@ -69,15 +65,15 @@ body {
 
 /* Bot message */
 .bot {
-    background: #fcd298; /* warm light brown */
-    color: #3e2723; /* dark brown text */
+    background: #fcd298;
+    color: #3e2723;
     align-self: flex-start;
     border-bottom-left-radius: 6px;
 }
 
 /* User message */
 .user {
-    background: #6b4226; /* dark brown */
+    background: #6b4226;
     color: #fffaf3;
     align-self: flex-end;
     border-bottom-right-radius: 6px;
@@ -97,11 +93,8 @@ body {
     outline: none;
     font-size: 14px;
     border-radius: 10px 12px;
-    background:/* #fcd298;*/#d7ccc8;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    margin-right: 5px;
+    background: #d7ccc8;
+    margin: 5px;
 }
 
 button {
@@ -113,11 +106,38 @@ button {
     font-weight: bold;
     border-radius: 10px 12px 12px 10px;
     transition: 0.3s;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin: 5px;
 }
 
 button:hover {
-    background: #fcd298;;
+    background: #fcd298;
+}
+
+/* Responsive adjustments for very small screens */
+@media (max-width: 480px) {
+    .chat-container {
+        height: 90vh;
+        max-height: unset;
+        width: 95%;
+    }
+
+    .header {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #userInput {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .message {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
 }

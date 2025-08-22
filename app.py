@@ -1,34 +1,40 @@
-from flask import Flask, render_template, request, jsonify
-import re
+from flask import Flask, render_template, request, jsonify, session
+import re, os
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "supersecret123")
 
-# Temporary session storage (per single user for demo)
-user_state = {
-    "name": None,
-    "step": None,
-    "booking_type": None
-}
+# Helper function to get or create session state
+def get_user_state():
+    if "state" not in session:
+        session["state"] = {
+            "name": None,
+            "step": None,
+            "booking_type": None,
+            "rooms": None
+        }
+    return session["state"]
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-
 @app.route("/get_response", methods=["POST"])
 def get_response():
     user_message = request.json.get("message").lower()
     response = ""
+    user_state = get_user_state()
 
     # Helper: extract number from message
     def extract_number(text):
         numbers = re.findall(r"\d+", text)
         return int(numbers[0]) if numbers else None
 
-    # 1. Ask for name first
+    # 1. Ask for name only if not set
     if user_state["name"] is None:
         if "i am" in user_message or "my name is" in user_message:
             user_state["name"] = user_message.split()[-1].capitalize()
+            session["state"] = user_state
             response = f"Hello {user_state['name']}! 🎉 You can ask about Menu, Events, or Bookings."
         else:
             response = "👋 Hi! What's your name?"
@@ -37,6 +43,7 @@ def get_response():
     # 2. Handle booking flow
     if "booking" in user_message:
         user_state["step"] = "choose_booking"
+        session["state"] = user_state
         response = "Would you like to book a Table 🍽️ or a Room 🏨?"
         return jsonify({"response": response})
 
@@ -45,10 +52,12 @@ def get_response():
         if "table" in user_message:
             user_state["booking_type"] = "table"
             user_state["step"] = "table_people"
+            session["state"] = user_state
             response = "How many people are you booking the table for?"
         elif "room" in user_message:
             user_state["booking_type"] = "room"
             user_state["step"] = "room_count"
+            session["state"] = user_state
             response = "How many rooms would you like to book?"
         else:
             response = "Please type either 'Table' 🍽️ or 'Room' 🏨."
@@ -61,6 +70,7 @@ def get_response():
             response = f"✅ Table booking confirmed for {people} people! 🎉 Your Table No: T{people+10}"
             user_state["step"] = None
             user_state["booking_type"] = None
+            session["state"] = user_state
         else:
             response = "Please enter a valid number of people."
         return jsonify({"response": response})
@@ -71,6 +81,7 @@ def get_response():
         if rooms:
             user_state["rooms"] = rooms
             user_state["step"] = "room_days"
+            session["state"] = user_state
             response = f"Great! For how many days do you want to book {rooms} room(s)?"
         else:
             response = "Please enter a valid number of rooms."
@@ -85,6 +96,7 @@ def get_response():
             user_state["step"] = None
             user_state["booking_type"] = None
             user_state.pop("rooms", None)
+            session["state"] = user_state
         else:
             response = "Please enter a valid number of days."
         return jsonify({"response": response})
@@ -102,7 +114,6 @@ def get_response():
         response = "❓ Sorry, I didn’t understand. Please ask about Menu, Events, or Bookings."
 
     return jsonify({"response": response})
-
 
 if __name__ == "__main__":
     app.run(debug=True)
