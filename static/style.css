@@ -1,0 +1,123 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f0e1; /* soft beige */
+    background-image: url(https://static.vecteezy.com/system/resources/previews/021/428/962/non_2x/background-junk-food-related-seamless-pattern-and-background-editable-stroke-fast-food-line-art-of-hamburger-pizza-hot-dog-beverage-cheeseburger-restaurant-menu-background-free-vector.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Chat container */
+.chat-container {
+    width: 400px;
+    height: 520px;
+    background: #fffaf3; /* light beige */
+    border-radius: 16px;
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Title bar */
+.header {
+    background: #6b4226; /* dark brown */
+    color: #f5f0e1;
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 12px 12px;
+}
+
+.header span {
+    font-size: 22px; /* 🍽️ icon size */
+}
+
+/* Chat area */
+#chatbox {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    background: #f5f0e1; /* beige */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Message bubbles */
+.message {
+    margin: 8px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    max-width: 75%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Bot message */
+.bot {
+    background: #fcd298; /* warm light brown */
+    color: #3e2723; /* dark brown text */
+    align-self: flex-start;
+    border-bottom-left-radius: 6px;
+}
+
+/* User message */
+.user {
+    background: #6b4226; /* dark brown */
+    color: #fffaf3;
+    align-self: flex-end;
+    border-bottom-right-radius: 6px;
+}
+
+/* Input area */
+.input-area {
+    display: flex;
+    border-top: 1px solid #ddd;
+    background: #fffaf3;
+}
+
+#userInput {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    border-radius: 10px 12px;
+    background:/* #fcd298;*/#d7ccc8;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    background: #6b4226;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 10px 12px 12px 10px;
+    transition: 0.3s;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+button:hover {
+    background: #fcd298;;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel ="icon" href="https://png.pngtree.com/png-clipart/20230928/original/pngtree-showing-the-front-of-restaurants-vector-png-image_13009444.png">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">🍴 Restaurant Bot</div>
+        <div id="chatbox">
+            <div class="bot message">🤖 Bot: Hello! Type 'Hi' to start.</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your message..." onkeypress="checkEnter(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            let userMessage = document.getElementById("userInput").value;
+            if(userMessage.trim() === "") return;
+
+            let chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += `<div class="user message">🧑 You: ${userMessage}</div>`;
+
+            let response = await fetch("/get_response", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({"message": userMessage})
+            });
+
+            let data = await response.json();
+            chatbox.innerHTML += `<div class="bot message">🤖 Bot: ${data.response}</div>`;
+
+            document.getElementById("userInput").value = "";
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function checkEnter(e) {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
